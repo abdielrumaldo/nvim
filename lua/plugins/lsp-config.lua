@@ -9,7 +9,7 @@ local config = {
 		"williamboman/mason-lspconfig.nvim",
 		config = function()
 			require("mason-lspconfig").setup({
-				ensure_installed = { "lua_ls", "pylsp", "tsserver" },
+				ensure_installed = { "lua_ls", "pylsp" },
 			})
 		end,
 	},
@@ -18,14 +18,14 @@ local config = {
 		config = function()
 			local lspconfig = require("lspconfig")
 			lspconfig.lua_ls.setup({
-        capabilities = capabilities
-      })
+				capabilities = capabilities,
+			})
 			lspconfig.pylsp.setup({
-        capabilities = capabilities
-      })
+				capabilities = capabilities,
+			})
 			lspconfig.tsserver.setup({
-        capabilities = capabilities
-      })
+				capabilities = capabilities,
+			})
 
 			vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, {})
 			vim.keymap.set("n", "gD", vim.lsp.buf.declaration, {})
