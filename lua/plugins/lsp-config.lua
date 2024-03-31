@@ -1,37 +1,92 @@
 local config = {
-	{
-		"williamboman/mason.nvim",
-		config = function()
-			require("mason").setup()
-		end,
-	},
-	{
-		"williamboman/mason-lspconfig.nvim",
-		config = function()
-			require("mason-lspconfig").setup({
-				ensure_installed = { "lua_ls", "pylsp" },
-			})
-		end,
-	},
-	{
-		"neovim/nvim-lspconfig",
-		config = function()
-			local lspconfig = require("lspconfig")
-			lspconfig.lua_ls.setup({
-				capabilities = capabilities,
-			})
-			lspconfig.pylsp.setup({
-				capabilities = capabilities,
-			})
-			lspconfig.tsserver.setup({
-				capabilities = capabilities,
-			})
+    -- LSP Configuration
+    -- https://github.com/neovim/nvim-lspconfig
+    'neovim/nvim-lspconfig',
+    event = 'VeryLazy',
+    dependencies = {
+        -- LSP Management
+        -- https://github.com/williamboman/mason.nvim
+        { 'williamboman/mason.nvim' },
+        -- https://github.com/williamboman/mason-lspconfig.nvim
+        { 'williamboman/mason-lspconfig.nvim' },
 
-			vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, {})
-			vim.keymap.set("n", "gD", vim.lsp.buf.declaration, {})
-			vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
-			vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {})
-		end,
-	},
+        -- Autoinstall LSPs, linters, formatters debuggers
+        { 'WhoIsSethDaniel/mason-tool-installer.nvim' },
+        -- Useful status updates for LSP
+        -- https://github.com/j-hui/fidget.nvim
+        { 'j-hui/fidget.nvim', opts = {} },
+
+        -- Additional lua configuration, makes nvim stuff amazing!
+        -- https://github.com/folke/neodev.nvim
+        {'folke/neodev.nvim' },
+    },
+    config = function ()
+        require('mason').setup()
+        require('mason-lspconfig').setup({
+            -- Install these LSPs automatically
+            ensure_installed = {
+                'bashls', -- requires npm to be installed
+                'cssls', -- requires npm to be installed
+                'html', -- requires npm to be installed
+                'lua_ls',
+                'jsonls', -- requires npm to be installed
+                'lemminx',
+                'marksman',
+                'quick_lint_js',
+                'tsserver', -- requires npm to be installed
+                'yamlls', -- requires npm to be installed
+                'pyright'
+            }
+        })
+
+        require('mason-tool-installer').setup({
+            ensure_installed = {
+                'black',
+                'debugpy',
+                'flake8',
+                'isort',
+                'mypy',
+                'pylint',
+            },
+        })
+
+        vim.api.nvim_command('MasonToolsInstall')
+
+        local lspconfig = require('lspconfig')
+        local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
+        local lsp_attach = function(client, bufnr)
+        end
+
+        -- Call setup on each LSP server
+        require('mason-lspconfig').setup_handlers({
+            function(server_name)
+                lspconfig[server_name].setup({
+                    on_attach = lsp_attach,
+                    capabilities = lsp_capabilities,
+                })
+            end
+        })
+
+        -- Lua LSP settings
+        lspconfig.lua_ls.setup {
+            settings = {
+                Lua = {
+                    diagnostics = {
+                        -- Get the language server to recognize the `vim` global
+                        globals = {'vim'},
+                    },
+                },
+            },
+        }
+
+        -- Globally configure all LSP floating preview popups (like hover, signature help, etc)
+        local open_floating_preview = vim.lsp.util.open_floating_preview
+        function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+            opts = opts or {}
+            opts.border = opts.border or "rounded" -- Set border to rounded
+            return open_floating_preview(contents, syntax, opts, ...)
+        end
+
+    end
 }
 return config
