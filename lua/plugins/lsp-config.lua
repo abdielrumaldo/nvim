@@ -44,9 +44,6 @@ local config = {
                 'black',
                 'debugpy',
                 'flake8',
-                'isort',
-                'mypy',
-                'pylint',
             },
         })
 
@@ -67,18 +64,6 @@ local config = {
             end
         })
 
-        -- Lua LSP settings
-        lspconfig.lua_ls.setup {
-            settings = {
-                Lua = {
-                    diagnostics = {
-                        -- Get the language server to recognize the `vim` global
-                        globals = {'vim'},
-                    },
-                },
-            },
-        }
-
         -- Globally configure all LSP floating preview popups (like hover, signature help, etc)
         local open_floating_preview = vim.lsp.util.open_floating_preview
         function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
@@ -87,6 +72,6 @@ local config = {
             return open_floating_preview(contents, syntax, opts, ...)
         end
 
-    end
+    end,
 }
 return config
