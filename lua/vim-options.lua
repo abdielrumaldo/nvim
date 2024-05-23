@@ -1,9 +1,12 @@
+-- rumaldo
 -- disable netrw at the very start of your init.lua
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
 -- optionally enable 24-bit colour
 vim.opt.termguicolors = true
+
+-- special pasting without the whole :set paste thing
 
 vim.guicursor = ""
 
@@ -47,21 +50,9 @@ vim.keymap.set("n", "N", "Nzzzv")
 -- Telescope
 vim.keymap.set("n", "<leader>ff", require("telescope.builtin").find_files, {})
 vim.keymap.set("n", "<leader>fg", require("telescope.builtin").live_grep, {})
+vim.keymap.set("n", "<leader>qf", require("telescope.builtin").quickfix, {})
 vim.keymap.set("n", "<leader>fb", require("telescope.builtin").buffers, {})
-
--- LSP
-vim.keymap.set("n", "<leader>gg", "<cmd>lua vim.lsp.buf.hover()<CR>")
-vim.keymap.set("n", "<leader>gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
-vim.keymap.set("n", "<leader>gD", "<cmd>lua vim.lsp.buf.declaration()<CR>")
-vim.keymap.set("n", "<leader>gi", "<cmd>lua vim.lsp.buf.implementation()<CR>")
-vim.keymap.set("n", "<leader>gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>")
-vim.keymap.set("n", "<leader>gr", "<cmd>lua vim.lsp.buf.references()<CR>")
-vim.keymap.set("n", "<leader>gs", "<cmd>lua vim.lsp.buf.signature_help()<CR>")
-vim.keymap.set("n", "<leader>rr", "<cmd>lua vim.lsp.buf.rename()<CR>")
--- Look into this, why not just a map for both? {i, n}
-vim.keymap.set("n", "<leader>gf", "<cmd>lua vim.lsp.buf.format({async = true})<CR>")
-vim.keymap.set("v", "<leader>gf", "<cmd>lua vim.lsp.buf.format({async = true})<CR>")
-
+--
 -- Formatting Keymaps
 vim.keymap.set({ "n", "v" }, "<leader>ll",
     function() require("conform").format({ lsp_fallback = true, async = false, timeout = 500 }) end)

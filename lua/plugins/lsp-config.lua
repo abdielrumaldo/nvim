@@ -14,27 +14,24 @@ local config = {
         { 'WhoIsSethDaniel/mason-tool-installer.nvim' },
         -- Useful status updates for LSP
         -- https://github.com/j-hui/fidget.nvim
-        { 'j-hui/fidget.nvim', opts = {} },
+        { 'j-hui/fidget.nvim',                        opts = {} },
 
         -- Additional lua configuration, makes nvim stuff amazing!
         -- https://github.com/folke/neodev.nvim
-        {'folke/neodev.nvim' },
+        { 'folke/neodev.nvim' },
     },
-    config = function ()
+    config = function()
         require('mason').setup()
         require('mason-lspconfig').setup({
             -- Install these LSPs automatically
             ensure_installed = {
-                'bashls', -- requires npm to be installed
-                'cssls', -- requires npm to be installed
-                'html', -- requires npm to be installed
+                'bashls',   -- requires npm to be installed
+                'cssls',    -- requires npm to be installed
+                'html',     -- requires npm to be installed
                 'lua_ls',
-                'jsonls', -- requires npm to be installed
-                'lemminx',
-                'marksman',
-                'quick_lint_js',
+                'jsonls',   -- requires npm to be installed
                 'tsserver', -- requires npm to be installed
-                'yamlls', -- requires npm to be installed
+                'yamlls',   -- requires npm to be installed
                 'pyright'
             }
         })
@@ -71,7 +68,7 @@ local config = {
             opts.border = opts.border or "rounded" -- Set border to rounded
             return open_floating_preview(contents, syntax, opts, ...)
         end
-
     end,
 }
-return config
+-- return config
+return {}
