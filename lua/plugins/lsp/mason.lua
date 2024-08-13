@@ -15,7 +15,11 @@ local M = {
                 'jsonls',   -- requires npm to be installed
                 'tsserver', -- requires npm to be installed
                 'yamlls',   -- requires npm to be installed
-                'pyright'
+                'lemminx',
+                'marksman',
+                'quick_lint_js',
+                'yamlls',
+                'pyright',
             },
             automatic_installation = true,
         })

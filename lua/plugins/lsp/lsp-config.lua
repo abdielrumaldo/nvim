@@ -3,8 +3,18 @@ local M = {
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
         "hrsh7th/cmp-nvim-lsp",
-        { "antosha417/nvim-lsp-file-operations", config = true },
-        { "folke/neodev.nvim",                   opts = {} },
+        { "antosha417/nvim-lsp-file-operations",      config = true },
+        -- Auto-Install LSPs, linters, formatters, debuggers
+        -- https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim
+        { 'WhoIsSethDaniel/mason-tool-installer.nvim' },
+
+        -- Useful status updates for LSP
+        -- https://github.com/j-hui/fidget.nvim
+        { 'j-hui/fidget.nvim',                        opts = {} },
+
+        -- Additional lua configuration, makes nvim stuff amazing!
+        -- https://github.com/folke/neodev.nvim
+        { 'folke/neodev.nvim',                        opts = {} },
     },
     config = function()
         -- import lspconfig plugin
@@ -13,11 +23,28 @@ local M = {
         -- import mason_lspconfig plugin
         local mason_lspconfig = require("mason-lspconfig")
 
+        -- import mason-tool-installer
+        require('mason-tool-installer').setup({
+            -- Install these linters, formatters, debuggers automatically
+            ensure_installed = {
+                'black',
+                'debugpy',
+                'flake8',
+                'isort',
+                'mypy',
+                'pylint',
+            },
+        })
+        -- https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim/issues/39
+        vim.api.nvim_command('MasonToolsInstall')
         -- import cmp-nvim-lsp plugin
         local cmp_nvim_lsp = require("cmp_nvim_lsp")
+        -- used to enable autocompletion (assign to every lsp server config)
 
+        local capabilities = cmp_nvim_lsp.default_capabilities()
         local keymap = vim.keymap -- for conciseness
 
+        -- Keybinds
         vim.api.nvim_create_autocmd("LspAttach", {
             group = vim.api.nvim_create_augroup("UserLspConfig", {}),
             callback = function(ev)
@@ -67,8 +94,6 @@ local M = {
             end,
         })
 
-        -- used to enable autocompletion (assign to every lsp server config)
-        local capabilities = cmp_nvim_lsp.default_capabilities()
 
         -- Change the Diagnostic symbols in the sign column (gutter)
         -- (not in youtube nvim video)
@@ -86,7 +111,12 @@ local M = {
                 })
             end,
 
-
+            ["pyright"] = function()
+                lspconfig.pyright.setup({
+                    capabilities = capabilities,
+                    filetypes = { "python" }
+                })
+            end,
             ["volar"] = function()
                 lspconfig["volar"].setup({
                     capabilities = capabilities,
