@@ -46,11 +46,11 @@ local M = {
                 mapping = cmp.mapping.preset.insert {
                     ['<C-j>'] = cmp.mapping.select_next_item(), -- next suggestion
                     ['<C-k>'] = cmp.mapping.select_prev_item(), -- previous suggestion
-                    ['<C-b>'] = cmp.mapping.scroll_docs(-4), -- scroll backward
-                    ['<C-f>'] = cmp.mapping.scroll_docs(4), -- scroll forward
-                    ['<C-Space>'] = cmp.mapping.complete {}, -- show completion suggestions
+                    ['<C-b>'] = cmp.mapping.scroll_docs(-4),    -- scroll backward
+                    ['<C-f>'] = cmp.mapping.scroll_docs(4),     -- scroll forward
+                    ['<C-Space>'] = cmp.mapping.complete {},    -- show completion suggestions
                     ['<CR>'] = cmp.mapping.confirm {
-                        behavior = cmp.ConfirmBehavior.Replace,
+                        behavior = cmp.ConfirmBehavior.insert,
                         select = true,
                     },
                     -- Tab through suggestions or when a snippet is active, tab to the next argument
@@ -80,8 +80,7 @@ local M = {
                     { name = "buffer" },
                 }),
             })
-
-		end,
-	},
+        end,
+    },
 }
 return M

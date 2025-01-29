@@ -1,38 +1,35 @@
 local M = {
-    "mfussenegger/nvim-lint",
-    event = {},
-    config = function()
-        local lint = require("nvim-lint");
 
-        lint.lint_by_ft = {
+    "mfussenegger/nvim-lint",
+    event = {
+        "BufReadPre",
+        "BufNewFile",
+    },
+    config = function()
+        local lint = require("lint")
+
+        lint.linters_by_ft = {
+            javascript = { "eslint_d" },
             typescript = { "eslint_d" },
             javascriptreact = { "eslint_d" },
             typescriptreact = { "eslint_d" },
             svelte = { "eslint_d" },
-            vue = { "eslint_d" },
-            json = { "eslint_d" },
-            yaml = { "eslint_d" },
-            markdown = { "eslint_d" },
-            graphql = { "eslint_d" },
-            liquid = { "eslint_d" },
-            -- Conform will run multiple formatters sequentially
-            python = { "pylint" },
-            -- Use a sub-list to run only the first available formatter
-            javascript = { "eslint_d" },
-
+            python = { "ruff" },
         }
 
         local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
-        vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave", "TextChanged" }, {
+
+        vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
             group = lint_augroup,
             callback = function()
                 lint.try_lint()
-            end
+            end,
         })
+
         vim.keymap.set("n", "<leader>l", function()
             lint.try_lint()
-        end)
-    end
+        end, { desc = "Trigger linting for current file" })
+    end,
 }
 
 return M

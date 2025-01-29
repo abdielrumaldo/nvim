@@ -5,25 +5,25 @@ local M = {
         "BufNewFile",
     },
     config = function()
-        local conform = require("conform")
         require("conform").setup({
             formatters_by_ft = {
-                typescript = { "prettier" },
-                javascriptreact = { "prettier" },
-                typescriptreact = { "prettier" },
+                typescript = { "prettierd" },
+                javascriptreact = { "prettierd" },
+                typescriptreact = { "prettierd" },
                 svelte = { "prettier" },
                 vue = { "prettier" },
                 css = { "prettier" },
-                html = { "djlint" },
+                htmldjango = { "djlint", lsp_format = 'fallback' },
+                html = { "djlint", lsp_format = 'fallback' },
                 json = { "prettier" },
                 yaml = { "prettier" },
                 markdown = { "prettier" },
                 graphql = { "prettier" },
                 liquid = { "prettier" },
                 -- Conform will run multiple formatters sequentially
-                python = { "isort", "black" },
+                python = { "ruff_format", "ruff_organize_imports", "ruff_fix" },
                 -- Use a sub-list to run only the first available formatter
-                javascript = { { "prettierd", "prettier" } },
+                javascript = { "prettierd" },
             },
             format_on_save = {
                 lsp_fallback = true,

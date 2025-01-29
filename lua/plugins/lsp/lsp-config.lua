@@ -19,7 +19,7 @@ local M = {
     config = function()
         -- import lspconfig plugin
         local lspconfig = require("lspconfig")
-
+        --
         -- import mason_lspconfig plugin
         local mason_lspconfig = require("mason-lspconfig")
 
@@ -95,6 +95,7 @@ local M = {
         })
 
 
+        --
         -- Change the Diagnostic symbols in the sign column (gutter)
         -- (not in youtube nvim video)
         local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
@@ -118,9 +119,16 @@ local M = {
                 })
             end,
             ["volar"] = function()
+                -- Requires vue language server now
+                -- npm install -g @vue/language-server
                 lspconfig["volar"].setup({
                     capabilities = capabilities,
-                    filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' }
+                    filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
+                    init_options = {
+                        vue = {
+                            hybridMode = false,
+                        },
+                    },
                 })
             end,
 
@@ -132,11 +140,11 @@ local M = {
                 })
             end,
 
-            ["emmet_ls"] = function()
+            ["emmet-language-server"] = function()
                 -- configure emmet language server
                 lspconfig["emmet_ls"].setup({
                     capabilities = capabilities,
-                    filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
+                    filetypes = { "htmldjango", "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
                 })
             end,
 
