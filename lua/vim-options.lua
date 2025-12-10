@@ -1,4 +1,3 @@
--- rumaldo
 -- disable netrw at the very start of your init.lua
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
@@ -54,13 +53,36 @@ vim.keymap.set("n", "<leader>qf", require("telescope.builtin").quickfix, {})
 vim.keymap.set("n", "<leader>fb", require("telescope.builtin").buffers, {})
 --
 -- Formatting Keymaps
-vim.keymap.set({ "n", "v" }, "<leader>ll",
-    function() require("conform").format({ lsp_fallback = true, async = false, timeout = 500 }) end)
+vim.keymap.set({ "n", "v" }, "<leader>ll", function()
+    require("conform").format({ lsp_fallback = true, async = false, timeout = 500 })
+end)
+
+-- LSP Actions
 vim.keymap.set("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>")
+vim.keymap.set("n", "<leader>rr", "<cmd>lua vim.lsp.buf.rename()<CR>")
+vim.keymap.set("n", "<leader>rs", "<cmd>LspRestart<CR>")
+
+-- Diagnostics
 vim.keymap.set("n", "<leader>gl", "<cmd>lua vim.diagnostic.open_float()<CR>")
 vim.keymap.set("n", "<leader>gp", "<cmd>lua vim.diagnostic.goto_prev()<CR>")
 vim.keymap.set("n", "<leader>gn", "<cmd>lua vim.diagnostic.goto_next()<CR>")
+vim.keymap.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>")
+
+-- Symbols
 vim.keymap.set("n", "<leader>tr", "<cmd>lua vim.lsp.buf.document_symbol()<CR>")
+vim.keymap.set("n", "<leader>sw", "<cmd>Telescope lsp_workspace_symbols<CR>")
+vim.keymap.set("n", "<leader>sd", "<cmd>Telescope lsp_document_symbols<CR>")
+
+-- Navigation
+vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
+vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>")
+vim.keymap.set("n", "gI", "<cmd>lua vim.lsp.buf.implementation()<CR>")
+vim.keymap.set("n", "gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>")
+vim.keymap.set("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>")
+
+-- Hover / Signature / Completion
+vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>")
+vim.keymap.set("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>")
 vim.keymap.set("i", "<C-Space>", "<cmd>lua vim.lsp.buf.completion()<CR>")
 
 -- Harpoon v2
@@ -70,14 +92,30 @@ local harpoon = require("harpoon")
 harpoon:setup()
 -- REQUIRED
 
-vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
-vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+vim.keymap.set("n", "<leader>a", function()
+    harpoon:list():add()
+end)
+vim.keymap.set("n", "<C-e>", function()
+    harpoon.ui:toggle_quick_menu(harpoon:list())
+end)
 
-vim.keymap.set("n", "<leader>1", function() harpoon:list():select(1) end)
-vim.keymap.set("n", "<leader>2", function() harpoon:list():select(2) end)
-vim.keymap.set("n", "<leader>3", function() harpoon:list():select(3) end)
-vim.keymap.set("n", "<leader>4", function() harpoon:list():select(4) end)
+vim.keymap.set("n", "<leader>1", function()
+    harpoon:list():select(1)
+end)
+vim.keymap.set("n", "<leader>2", function()
+    harpoon:list():select(2)
+end)
+vim.keymap.set("n", "<leader>3", function()
+    harpoon:list():select(3)
+end)
+vim.keymap.set("n", "<leader>4", function()
+    harpoon:list():select(4)
+end)
 
 -- Toggle previous & next buffers stored within Harpoon list
-vim.keymap.set("n", "<Tab>", function() harpoon:list():prev() end)
-vim.keymap.set("n", "<S-Tab>", function() harpoon:list():next() end)
+vim.keymap.set("n", "<Tab>", function()
+    harpoon:list():prev()
+end)
+vim.keymap.set("n", "<S-Tab>", function()
+    harpoon:list():next()
+end)
