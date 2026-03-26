@@ -8,10 +8,6 @@ local M = {
             -- https://github.com/saadparwaiz1/cmp_luasnip
             'saadparwaiz1/cmp_luasnip',
 
-            -- LSP completion capabilities
-            -- https://github.com/hrsh7th/cmp-nvim-lsp
-            'hrsh7th/cmp-nvim-lsp',
-
             -- Additional user-friendly snippets
             -- https://github.com/rafamadriz/friendly-snippets
             'rafamadriz/friendly-snippets',
@@ -24,9 +20,9 @@ local M = {
         },
         config = function()
             local cmp = require("cmp")
+            -- Required for Friendly Snippets
             require("luasnip.loaders.from_vscode").lazy_load()
             local luasnip = require('luasnip')
-            require('luasnip.loaders.from_vscode').lazy_load()
             luasnip.config.setup({})
 
             cmp.setup({
@@ -78,6 +74,7 @@ local M = {
                     { name = 'nvim_lsp' },
                     { name = "luasnip" }, -- For luasnip users.
                     { name = "buffer" },
+                    { name = "path" },
                 }),
             })
         end,

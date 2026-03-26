@@ -15,7 +15,7 @@ local M = {
                 "vue_ls",
                 "vtsls",
                 "lua_ls",
-                "basedpyright",
+                -- "basedpyright",
                 "ruff",
                 "jsonls",
                 "html",
@@ -25,12 +25,19 @@ local M = {
                 "lemminx",
                 "marksman",
                 "eslint",
+                'ty'
             },
             automatic_installation = true,
         })
 
-
+        -- Autocomplete capabilities
         local caps = require("cmp_nvim_lsp").default_capabilities()
+        vim.lsp.config(
+            "*",
+            {
+                capabilities = caps
+            }
+        )
 
         -- Inlay hints only if server supports them
         vim.api.nvim_create_autocmd("LspAttach", {
@@ -47,13 +54,12 @@ local M = {
                 end
             end,
         })
-        -- Define servers using vim.lsp.config(...)
 
         vim.lsp.config("lua_ls", {
             name = "lua_ls",
             cmd = { "lua-language-server" },
             filetypes = { "lua" },
-            capabilities = caps,
+
             settings = {
                 Lua = {
                     diagnostics = { globals = { "vim" } },
@@ -63,67 +69,84 @@ local M = {
             },
         })
 
-
         vim.lsp.config("ruff", {
             name = "ruff",
             cmd = { "ruff", "server" },
             filetypes = { "python" },
-            capabilities = caps,
             init_options = { settings = { args = {} } },
         })
-
 
         vim.lsp.config("html", {
             name = "html",
             cmd = { "vscode-html-language-server", "--stdio" },
             filetypes = { "html", "vue" },
-            capabilities = caps,
         })
 
         vim.lsp.config("eslint", {
             name = "eslint",
             cmd = { "vscode-eslint-language-server", "--stdio" },
             filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx", "vue" },
-            capabilities = caps,
         })
-
 
         -- Optionally configure extra servers (installed by Mason)
         vim.lsp.config("jsonls", {
             name = "jsonls",
             cmd = { "vscode-json-language-server", "--stdio" },
             filetypes = { "json", "jsonc" },
-            capabilities = caps,
         })
+
         vim.lsp.config("cssls", {
             name = "cssls",
             cmd = { "vscode-css-language-server", "--stdio" },
             filetypes = { "css", "scss", "less" },
-            capabilities = caps,
         })
+
         vim.lsp.config("yamlls", {
             name = "yamlls",
             cmd = { "yaml-language-server", "--stdio" },
             filetypes = { "yaml", "yml" },
-            capabilities = caps,
         })
+
         vim.lsp.config("bashls", {
             name = "bashls",
             cmd = { "bash-language-server", "start" },
             filetypes = { "sh", "bash" },
-            capabilities = caps,
         })
+
         vim.lsp.config("lemminx", {
             name = "lemminx",
             cmd = { "lemminx" },
             filetypes = { "xml", "xsd", "xsl", "xslt", "svg" },
-            capabilities = caps,
+
         })
+
         vim.lsp.config("marksman", {
             name = "marksman",
             cmd = { "marksman", "server" },
             filetypes = { "markdown" },
-            capabilities = caps,
+
+        })
+
+        vim.lsp.config('ty', {
+            settings = {
+                ty = {
+                }
+            }
+        })
+        -- vim.lsp.config("basedpyright", {
+        --     settings = {
+        --         basedpyright = {
+        --             {
+        --                 analysis = {
+        --                     typeCheckingMode = 'basic'
+        --                 }
+        --             }
+        --         },
+        --     },
+        -- })
+
+        vim.lsp.config('cssls', {
+            filetypes = { "tcss", "css", "scss", "less" }
         })
 
         local vue_language_server_path = vim.fn.stdpath("data")
@@ -134,7 +157,10 @@ local M = {
             languages = { "vue" },
             configNamespace = "typescript",
         }
+
         vim.lsp.config("vtsls", {
+
+
             settings = {
                 vtsls = {
                     tsserver = {
@@ -147,19 +173,22 @@ local M = {
             filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
         })
         -- Enable all defined servers
-        vim.lsp.enable("vtsls")
-        vim.lsp.enable("lua_ls")
-        vim.lsp.enable("basedpyright")
-        vim.lsp.enable("ruff")
-        vim.lsp.enable("html")
-        vim.lsp.enable("eslint")
-        vim.lsp.enable("jsonls")
-        vim.lsp.enable("cssls")
-        vim.lsp.enable("yamlls")
-        vim.lsp.enable("bashls")
-        vim.lsp.enable("lemminx")
-        vim.lsp.enable("marksman")
-        vim.lsp.enable("vue_ls")
+        vim.lsp.enable({ "vtsls",
+            "cssls",
+            "lua_ls",
+            -- "basedpyright",
+            "ruff",
+            "html",
+            "eslint",
+            "jsonls",
+            "cssls",
+            "yamlls",
+            "bashls",
+            "lemminx",
+            "marksman",
+            "vue_ls",
+            "ty"
+        })
     end,
 }
 
