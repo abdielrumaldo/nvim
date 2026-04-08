@@ -23,7 +23,6 @@ local M = {
                 -- Django templates
                 htmldjango = { "djlint" },
 
-                -- Python via Ruff (fast, opinionated)
                 python = { "ruff_format", "ruff_organize_imports", "ruff_fix" },
             },
 

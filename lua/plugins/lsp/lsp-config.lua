@@ -4,7 +4,7 @@ local M = {
     dependencies = {
         "williamboman/mason.nvim",
         "williamboman/mason-lspconfig.nvim",
-        "hrsh7th/cmp-nvim-lsp",
+        'saghen/blink.cmp',
     },
     config = function()
         -- Mason setup + ensure servers
@@ -30,12 +30,12 @@ local M = {
             automatic_installation = true,
         })
 
-        -- Autocomplete capabilities
-        local caps = require("cmp_nvim_lsp").default_capabilities()
+        -- Autocomplete capabilities for all lsps
+        local capabilities = require('blink.cmp').get_lsp_capabilities()
         vim.lsp.config(
             "*",
             {
-                capabilities = caps
+                capabilities = capabilities
             }
         )
 

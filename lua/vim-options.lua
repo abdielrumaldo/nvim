@@ -113,9 +113,10 @@ vim.keymap.set("n", "<leader>4", function()
 end)
 
 -- Toggle previous & next buffers stored within Harpoon list
-vim.keymap.set("n", "<Tab>", function()
-    harpoon:list():prev()
-end)
-vim.keymap.set("n", "<S-Tab>", function()
-    harpoon:list():next()
-end)
+-- Disabled until I find better keybinds
+-- vim.keymap.set("n", "<Tab>", function()
+--     harpoon:list():prev()
+-- end)
+-- vim.keymap.set("n", "<S-Tab>", function()
+--     harpoon:list():next()
+-- end)
