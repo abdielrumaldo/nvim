@@ -84,6 +84,7 @@ local M = {
                 }
             }
         },
+
         -- Default list of enabled providers defined so that you can extend it
         -- elsewhere in your config, without redefining it, due to `opts_extend`
         sources = {
@@ -109,7 +110,6 @@ local M = {
             -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
             -- Adjusts spacing to ensure icons are aligned
             nerd_font_variant = 'mono',
-            -- Blink does not expose its default kind icons so you must copy them all (or set your custom ones) and add Copilot
         },
     },
     opts_extend = { "sources.default" }

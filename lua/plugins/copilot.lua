@@ -6,9 +6,9 @@ local M = {
         require("copilot").setup({
             suggestion = { enabled = false },
             panel = { enabled = false },
+            copilot_model = "Claude Opus 4.6",
         })
         require("copilot.suggestion").toggle_auto_trigger()
     end,
 }
-
 return M
