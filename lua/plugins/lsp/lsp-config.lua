@@ -128,10 +128,12 @@ local M = {
         })
 
         vim.lsp.config('ty', {
+            filetypes = { "python" },
             settings = {
                 ty = {
                 }
             }
+
         })
         -- vim.lsp.config("basedpyright", {
         --     settings = {
