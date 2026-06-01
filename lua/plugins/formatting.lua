@@ -1,35 +1,26 @@
--- npm install -g prettierd prettier
-
 local M = {
     "stevearc/conform.nvim",
     event = { "BufReadPre", "BufNewFile" },
     config = function()
         require("conform").setup({
             formatters_by_ft = {
-                javascript = { "prettierd", "prettier", stop_after_first = true },
-                typescript = { "prettierd", "prettier", stop_after_first = true },
-                javascriptreact = { "prettierd", "prettier", stop_after_first = true },
-                typescriptreact = { "prettierd", "prettier", stop_after_first = true },
-                svelte = { "prettierd", "prettier", stop_after_first = true },
-                vue = { "prettierd", "prettier", stop_after_first = true },
-                css = { "prettierd", "prettier", stop_after_first = true },
-                html = { "prettierd", "prettier", stop_after_first = true },
-                json = { "prettierd", "prettier", stop_after_first = true },
-                yaml = { "prettierd", "prettier", stop_after_first = true },
-                markdown = { "prettierd", "prettier", stop_after_first = true },
-                graphql = { "prettierd", "prettier", stop_after_first = true },
-                liquid = { "prettierd", "prettier", stop_after_first = true },
-
-                -- Django templates
-                htmldjango = { "djlint" },
-
-                python = { "ruff_format", "ruff_organize_imports", "ruff_fix" },
+                javascript = { "deno_fmt" },
+                typescript = { "deno_fmt" },
+                markdown = { "deno_fmt" },
+                dockerfile = { "dockerfmt" },
+                css = { "css_beautify" },
+                html = { "html_beautify" },
+                json = { "jq" },
+                yaml = { "yamlfmt" },
+                jinja = { "djlint" },
+                python = { "ruff_format", "ruff_organize_imports", "ruff_fix", lsp_format = "last" },
             },
 
             format_on_save = {
                 lsp_fallback = true,
-                timeout_ms = 500,
+                timeout_ms = 10000,
             },
+            notify_on_error = true,
         })
     end,
 }

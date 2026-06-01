@@ -10,8 +10,10 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
         lazypath,
     })
 end
+
 vim.opt.rtp:prepend(lazypath)
 local opts = {}
+
 -- This has to be set before initializing lazy
 vim.g.mapleader = " "
 
@@ -22,5 +24,12 @@ require("lazy").setup({ { import = "plugins" }, { import = "plugins.lsp" } }, {
     },
 })
 
+-- Treesitter doesn't work with the new filetype system, so we have to start it manually for each filetype
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = { 'lua', 'python', 'javascript', 'typescript', 'rust', 'go' },
+    callback = function() vim.treesitter.start() end,
+})
+
 -- sigh... always do this last...
 require("vim-options")
+require("filetypes")

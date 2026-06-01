@@ -51,15 +51,19 @@ vim.keymap.set("n", "<leader>ff", require("telescope.builtin").find_files, {})
 vim.keymap.set("n", "<leader>fg", require("telescope.builtin").live_grep, {})
 vim.keymap.set("n", "<leader>qf", require("telescope.builtin").quickfix, {})
 vim.keymap.set("n", "<leader>fb", require("telescope.builtin").buffers, {})
---
+
 -- Formatting Keymaps
 vim.keymap.set({ "n", "v" }, "<leader>ll", function()
     require("conform").format({ lsp_fallback = true, async = false, timeout = 500 })
 end)
 
+-- winddow split
+vim.keymap.set("n", "<leader>|", ":vsplit<CR>")
+vim.keymap.set("n", "<leader>-", ":split<CR>")
+
 -- LSP Actions
 vim.keymap.set("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>")
-vim.keymap.set("n", "<leader>rr", "<cmd>lua vim.lsp.buf.rename()<CR>")
+vim.keymap.set("n", "<reader>rr", "<cmd>lua vim.lsp.buf.rename()<CR>")
 vim.keymap.set("n", "<leader>rs", "<cmd>LspRestart<CR>")
 
 -- Diagnostics
