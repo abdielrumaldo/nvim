@@ -10,4 +10,5 @@ local M = {
         require("copilot.suggestion").toggle_auto_trigger()
     end,
 }
+
 return M
