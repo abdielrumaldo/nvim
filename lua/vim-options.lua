@@ -65,7 +65,7 @@ vim.keymap.set("n", "<leader>-", ":split<CR>")
 
 -- LSP Actions
 vim.keymap.set("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>")
-vim.keymap.set("n", "<reader>rr", "<cmd>lua vim.lsp.buf.rename()<CR>")
+vim.keymap.set("n", "<leader>rr", "<cmd>lua vim.lsp.buf.rename()<CR>")
 vim.keymap.set("n", "<leader>rs", "<cmd>LspRestart<CR>")
 
 -- Diagnostics
